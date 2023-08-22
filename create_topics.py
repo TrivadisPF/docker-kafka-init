@@ -24,10 +24,10 @@ from itertools import chain
 
 
 SCRIPT_PATH = os.environ.get('KAFKA_CREATE_TOPICS_SCRIPT',
-                             '/kafka/bin/kafka-topics.sh')
+                             '/usr/bin/kafka-topics')
 TOPIC_STRING = os.environ.get('KAFKA_CREATE_TOPICS', '')
 CONFIG_STRING = os.environ.get('KAFKA_TOPIC_CONFIG', '')
-ZOOKEEPER_CONNECTION_STRING = os.environ.get('ZOOKEEPER_CONNECTION_STRING')
+KAFKA_BROKER_LIST = os.environ.get('KAFKA_BROKER_LIST')
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
@@ -59,7 +59,7 @@ class CaptureException(Exception):
 def kafka_topics(verb, args=None):
     args = [
         SCRIPT_PATH,
-        '--zookeeper', ZOOKEEPER_CONNECTION_STRING,
+        '--bootstrap-server', KAFKA_BROKER_LIST,
         '--{}'.format(verb)
     ] + (args if args is not None else [])
 
@@ -72,8 +72,8 @@ def kafka_topics(verb, args=None):
     out, err = p.communicate()
     if p.returncode != 0:
         raise CaptureException(p.returncode, out, err)
-
-    return out, err
+    logger.debug('kafka-topics: %s', out.decode('ASCII'))
+    return out.decode('ASCII'), err
 
 
 def get_default_config():
@@ -158,6 +158,7 @@ def create_topics(default_config, existing_topics):
             continue
         if topic_name in existing_topics:
             existing_topics_config[topic_name] = configs
+            logger.info('topic %s already exists', topic_name)
             continue
         logger.info('Creating topic %s: partitions=%s, replicas=%s, config=%r',
                     topic_name, partitions, replicas, configs)
@@ -168,7 +169,7 @@ def create_topics(default_config, existing_topics):
 
 
 def update_topic_configs(existing_topics_config):
-    for topic, config in existing_topics_config.iteritems():
+    for topic, config in existing_topics_config.items():
         logger.info('Topic %s already exists, ensuring configuration options match up',
                     topic)
         logger.info('Attempting to set configuration options to %s', config)
