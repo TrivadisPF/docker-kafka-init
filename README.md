@@ -1,7 +1,7 @@
 kafka-init
 ==========
 
-**kafka-init** is responsible for creating the topics.
+**kafka-init** is a Docker container which can be used to create Kafka topics automatically upon startup. The 
 
 Tags
 ----
@@ -16,9 +16,7 @@ Images in this repository are tagged as follows:
 Usage
 -----
 
-**kafka-init** requires a running instance of [Kafka][2]. It can be launched using
-command similar to this ```docker run -d -p 9092:9092 -l zookeeper monasca/kafka```.
-**kafka-init** will wait for Kafka to become accessible.
+**kafka-init** requires a running instance of [Kafka][2]. **kafka-init** will wait for Kafka to become accessible.
 
 Configuration
 -------------
@@ -27,8 +25,8 @@ Several parameters can be specified using environment variables:
 
 | Variable                      | Default          | Description                           |
 |-------------------------------|------------------|---------------------------------------|
-| `ZOOKEEPER_CONNECTION_STRING` | `zookeeper:2181` | Comma-separated list of ZK hosts      |
-| `KAFKA_HOST`                  | `kafka:9092`     | One of the Kafka brokers              |
+| `KAFKA_ZOOKEEPER_CONNECT`     | `zookeeper-1:2181`| Comma-separated list of ZK hosts      |
+| `KAFKA_HOST`                  | `kafka-1:19092`   | One of the Kafka brokers              |
 | `KAFKA_TIMEOUT`               | `60`      | How long to wait for Kafka to become available |
 | `KAFKA_CREATE_TOPICS`         | `unset`   | Topics to create on startup, see below       |
 | `KAFKA_TOPIC_CONFIG`          | `unset`   | Default config args for created topics       |
@@ -84,6 +82,4 @@ in a specific topic string, it will override the value specified here.
 
 
 [1]: http://semver.org/
-[2]: https://github.com/monasca/monasca-docker/tree/master/kafka
-[3]: https://hub.docker.com/r/monasca/api/
-[4]: https://github.com/monasca/monasca-docker/
+[2]: https://hub.docker.com/r/confluentinc/cp-kafka
