@@ -27,7 +27,7 @@ SCRIPT_PATH = os.environ.get('KAFKA_CREATE_TOPICS_SCRIPT',
                              '/usr/bin/kafka-topics')
 TOPIC_STRING = os.environ.get('KAFKA_CREATE_TOPICS', '')
 CONFIG_STRING = os.environ.get('KAFKA_TOPIC_CONFIG', '')
-KAFKA_BROKER_LIST = os.environ.get('KAFKA_BROKER_LIST')
+BOOTSTRAP_SERVERS = os.environ.get('BOOTSTRAP_SERVERS')
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
@@ -59,7 +59,7 @@ class CaptureException(Exception):
 def kafka_topics(verb, args=None):
     args = [
         SCRIPT_PATH,
-        '--bootstrap-server', KAFKA_BROKER_LIST,
+        '--bootstrap-server', BOOTSTRAP_SERVERS,
         '--{}'.format(verb)
     ] + (args if args is not None else [])
 
