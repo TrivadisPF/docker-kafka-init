@@ -60,7 +60,7 @@ def kafka_topics(verb, args=None):
     args = [
         SCRIPT_PATH,
         '--bootstrap-server', BOOTSTRAP_SERVERS,
-        '--command-config', 'config.properties',
+        '--command-config', '/config.properties',
         '--{}'.format(verb)
     ] + (args if args is not None else [])
 
