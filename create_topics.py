@@ -64,7 +64,7 @@ def kafka_topics(verb, args=None):
         '--{}'.format(verb)
     ] + (args if args is not None else [])
 
-    logger.debug('running: %s: %r', SCRIPT_PATH, args)
+    logger.info('running: %s: %r', SCRIPT_PATH, args)
     p = subprocess.Popen(args,
                          stdout=subprocess.PIPE,
                          stderr=subprocess.PIPE,
