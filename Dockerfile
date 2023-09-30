@@ -11,4 +11,5 @@ COPY create_topics.py  /
 COPY create_users.sh  /
 COPY config.properties /
 
-CMD cub kafka-ready -b kafka-1:19092 ${KAFKA_EXPECTED_BROKERS} ${KAFKA_TIMEOUT} && /create_users.sh && /create_topics.py
+#CMD cub kafka-ready -b kafka-1:19092 ${KAFKA_EXPECTED_BROKERS} ${KAFKA_TIMEOUT} && /create_users.sh && /create_topics.py
+#CMD cub kafka-ready -b kafka-1:19092 ${KAFKA_EXPECTED_BROKERS} ${KAFKA_TIMEOUT} && /create_topics.py
