@@ -25,12 +25,12 @@ Several parameters can be specified using environment variables:
 
 | Variable                      | Default          | Description                           |
 |-------------------------------|------------------|---------------------------------------|
-| `BOOTSTRAP_SERVERS`           | `kafka-1:19092`  | List of Kafka brokers              |
+| `KAFKA_ZOOKEEPER_CONNECT`     | `zookeeper-1:2181`| Comma-separated list of ZK hosts      |
+| `KAFKA_HOST`                  | `kafka-1:19092`   | One of the Kafka brokers              |
 | `KAFKA_TIMEOUT`               | `60`      | How long to wait for Kafka to become available |
-| `KAFKA_EXPECTED_BROKERS`      | `1`       | The number of brokers to wait for |
 | `KAFKA_CREATE_TOPICS`         | `unset`   | Topics to create on startup, see below       |
 | `KAFKA_TOPIC_CONFIG`          | `unset`   | Default config args for created topics       |
-| `KAFKA_CREATE_TOPICS_SCRIPT`  | `/usr/bin/kafka-topics` | Path to script that creates topics |
+| `KAFKA_CREATE_TOPICS_SCRIPT`  | `/kafka/bin/kafka-topics.sh` | Path to script that creates topics |
 
 Topic creation
 --------------
