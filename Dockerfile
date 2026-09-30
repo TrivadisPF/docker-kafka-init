@@ -9,4 +9,4 @@ ENV KAFKA_BROKER_LIST=kafka-1:19092 \
 
 COPY create_topics.py  /
 
-CMD cub kafka-ready -b kafka-1:19092 1 120 && /create_topics.py
+CMD cub kafka-ready -b ${KAFKA_BROKER_LIST} 1 120 && /create_topics.py
